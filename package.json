@@ -20,7 +20,7 @@
     "test": "jest --passWithNoTests --coverage",
     "test:watch": "jest --coverage --watch",
     "prepublish": "npm run build",
-    "postinstall": "npm install && npm run build"
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
