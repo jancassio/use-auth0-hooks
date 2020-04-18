@@ -58,6 +58,7 @@ export default function Auth0Provider({
   children,
   clientId,
   redirectUri,
+  useRefreshTokens,
   onRedirecting,
   onRedirectCallback,
   onLoginError,
@@ -71,6 +72,7 @@ export default function Auth0Provider({
         setClient(await createClient({
           client_id: clientId,
           redirect_uri: redirectUri,
+          useRefreshTokens,
           ...props
         }));
       } catch (err) {
