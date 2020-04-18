@@ -20,11 +20,11 @@
     "test": "jest --passWithNoTests --coverage",
     "test:watch": "jest --coverage --watch",
     "prepublish": "npm run build",
-    "postinstall": "npm run build"
+    "postinstall": "npm install && npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sandrinodimattia/use-auth0-hooks.git"
+    "url": "git+https://github.com/jancassio/use-auth0-hooks.git"
   },
   "author": "Sandrino Di Mattia",
   "license": "MIT",
