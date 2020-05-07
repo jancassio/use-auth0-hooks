@@ -19,8 +19,7 @@
     "build": "tsc -p tsconfig.build.json",
     "test": "jest --passWithNoTests --coverage",
     "test:watch": "jest --coverage --watch",
-    "prepublish": "npm run build",
-    "postinstall": "npm run build"
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
