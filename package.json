@@ -24,7 +24,7 @@
     "test": "jest --passWithNoTests --coverage",
     "test:watch": "jest --coverage --watch",
     "prepare": "npm run build",
-    "install": "npm run build"
+    "postinstall": "npm run build"
   },
   "repository": {
     "type": "git",
