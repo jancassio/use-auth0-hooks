@@ -59,6 +59,7 @@ export default function UserProvider({ children }: UserProviderOptions): JSX.Ele
           }
 
           const user = await ensureClient(client).getUser();
+
           setState({
             ...initialState(),
             user,

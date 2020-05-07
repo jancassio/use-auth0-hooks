@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 
 import UserContext from '../context/user-context';
 import { IAccessTokenContext } from '../context/access-token-context';
+import { IIDTokenContext } from '../context/id-token-context';
 import { getAccessTokenFromCache, ensureClient } from '../utils/auth0';
 import Auth0Context, { LoginOptions, AccessTokenRequestOptions, LogoutOptions } from '../context/auth0-context';
 
@@ -15,6 +16,11 @@ export interface UseAuthResult {
    * The access token.
    */
   accessToken?: string | null;
+
+  /**
+   * The user's id token (if available)
+   */
+  idToken?: string | null;
 
   /**
    * If the transaction failed, this will contain the error.
@@ -42,8 +48,9 @@ export interface UseAuthResult {
   logout: (options: LogoutOptions) => void;
 }
 
-function initialState(): IAccessTokenContext {
+function initialState(): (IAccessTokenContext & IIDTokenContext) {
   return {
+    idToken: null,
     accessToken: null,
     error: null,
     isLoading: false
@@ -78,7 +85,7 @@ export default function useAuth(accessTokenRequest?: AccessTokenRequestOptions):
 
   // The following will holde the additional state for this hook.
   // We'll try to fetch the access token from the cache first if available.
-  const [state, setState] = useState<IAccessTokenContext>((): IAccessTokenContext => ({
+  const [state, setState] = useState<(IAccessTokenContext & IIDTokenContext)>((): (IAccessTokenContext & IIDTokenContext) => ({
     ...initialState(),
     accessToken: client && getAccessTokenFromCache(client, accessTokenRequest.audience, accessTokenRequest.scope),
     isLoading: !!accessTokenRequest
@@ -114,8 +121,14 @@ export default function useAuth(accessTokenRequest?: AccessTokenRequestOptions):
         });
 
         // We will fetch the token in a silent way.
+        const idToken = await ensureClient(client).getIdTokenClaims({
+          audience: accessTokenRequest.audience,
+          scope: accessTokenRequest.scope
+        });
+
         setState({
           ...initialState(),
+          idToken: idToken.__raw,
           accessToken: await ensureClient(client).getTokenSilently({
             audience: accessTokenRequest.audience,
             scope: accessTokenRequest.scope
@@ -142,6 +155,7 @@ export default function useAuth(accessTokenRequest?: AccessTokenRequestOptions):
     isAuthenticated,
     isLoading: isLoading || state.isLoading,
     accessToken: state.accessToken,
+    idToken: state.idToken,
     login,
     logout
   };

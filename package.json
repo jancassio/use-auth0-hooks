@@ -4,7 +4,9 @@
   "description": "An easy way to sign in with Auth0 in your React SPA",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "directories": {
     "test": "tests"
   },
@@ -48,8 +50,6 @@
     "eslint-plugin-react": "^7.19.0",
     "jest": "^25.3.0",
     "prettier": "^2.0.4",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
     "react-test-renderer": "^16.13.1",
     "ts-jest": "^25.4.0",
     "tslib": "^1.11.1",
